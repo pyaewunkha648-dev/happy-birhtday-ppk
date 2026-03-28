@@ -1,1 +1,281 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+</head>
+<body>
+	<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Mission: Future 🚀</title>
+
+<style>
+body {
+  margin: 0;
+  overflow: hidden;
+  background: #000000; /* deep black space */
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+}
+
+/* Stars */
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
+}
+
+/* Galaxy glow */
+.galaxy {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(0,200,255,0.15), transparent 70%);
+  top: 20%;
+  left: 30%;
+  filter: blur(40px);
+}
+
+/* Earth */
+.earth {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #4facfe, #001);
+  box-shadow: 0 0 60px #4facfe;
+  transform: translate(-50%, -50%);
+  animation: rotate 40s linear infinite;
+}
+
+@keyframes rotate {
+  100% {transform: translate(-50%, -50%) rotate(360deg);}
+}
+
+/* Moon */
+.orbit {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  width: 240px;
+  height: 240px;
+  margin-left: -120px;
+  margin-top: -120px;
+  animation: spin 14s linear infinite;
+}
+
+.moon {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  background: #ccc;
+  border-radius: 50%;
+}
+
+@keyframes spin {
+  100% {transform: rotate(360deg);}
+}
+
+/* Satellite orbit */
+.sat-orbit {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  width: 320px;
+  height: 320px;
+  margin-left: -160px;
+  margin-top: -160px;
+  animation: spin 20s linear infinite;
+}
+
+.sat {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  font-size: 18px;
+}
+
+/* Rocket */
+.rocket {
+  position: absolute;
+  bottom: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 34px;
+  transition: all 4s ease;
+}
+
+/* Shooting star */
+.shoot {
+  position: absolute;
+  width: 2px;
+  height: 80px;
+  background: linear-gradient(white, transparent);
+  transform: rotate(45deg);
+  animation: shoot 2s linear infinite;
+}
+
+@keyframes shoot {
+  from {top:-10%; left:-10%;}
+  to {top:100%; left:100%;}
+}
+
+/* UI Panel */
+.panel {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 380px;
+  padding: 20px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(12px);
+  text-align: center;
+}
+
+button {
+  margin: 6px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid #fff3;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+}
+
+#countdown {
+  font-size: 26px;
+  color: #00cfff;
+}
+
+#msg {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #ddd;
+  line-height: 1.5;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Galaxy glow -->
+<div class="galaxy"></div>
+
+<!-- Stars -->
+<script>
+let stars=[];
+for(let i=0;i<250;i++){
+  let s=document.createElement("div");
+  s.className="star";
+  let size=Math.random()*2;
+  s.style.width=size+"px";
+  s.style.height=size+"px";
+  s.style.top=Math.random()*100+"vh";
+  s.style.left=Math.random()*100+"vw";
+  document.body.appendChild(s);
+  stars.push(s);
+}
+
+// Parallax effect
+document.addEventListener("mousemove", e=>{
+  stars.forEach((s,i)=>{
+    let speed=(i%5)*0.03;
+    s.style.transform=`translate(${e.clientX*speed}px,${e.clientY*speed}px)`;
+  });
+});
+</script>
+
+<!-- Earth & Moon -->
+<div class="earth"></div>
+<div class="orbit">
+  <div class="moon"></div>
+</div>
+
+<!-- Satellite -->
+<div class="sat-orbit">
+  <div class="sat">🛰️</div>
+</div>
+
+<!-- Rocket -->
+<div class="rocket" id="rocket">🚀</div>
+
+<!-- Shooting star -->
+<div class="shoot"></div>
+
+<!-- UI -->
+<div class="panel">
+  <h2>Mission Start 🚀</h2>
+  <div id="countdown"></div>
+  <button onclick="launch()">Launch</button>
+  <button onclick="toggleMusic()">Music 🎵</button>
+  <p id="msg"></p>
+</div>
+
+<!-- Music (online, no download needed) -->
+<audio id="music" loop>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+let rocket=document.getElementById("rocket");
+
+/* Countdown + launch */
+function launch(){
+  let c=10;
+  let cd=document.getElementById("countdown");
+  let timer=setInterval(()=>{
+    cd.innerText=c;
+    c--;
+    if(c<0){
+      clearInterval(timer);
+      cd.innerText="🚀 LAUNCH!";
+      rocket.style.bottom="120vh";
+      typeText();
+    }
+  },1000);
+}
+
+/* Typewriter birthday message */
+let text=`Happy Birthday bh NyiKo!
+
+  Happy 19, bro! Can’t believe you’re already here.Hope today’s chill and you get some time off from the gym for once.Keep running those marathons, swimming and chasing that aerospace dream.I know you’re gonna crush this year like every other challenge.Let’s make more crazy memories,lift more, run more and just enjoy life.Proud of you, man. 🌌`;
+
+let i=0;
+function typeText(){
+  let el=document.getElementById("msg");
+  if(i<text.length){
+    el.innerHTML+=text.charAt(i);
+    i++;
+    setTimeout(typeText,40);
+  }
+}
+
+/* Music toggle */
+let music=document.getElementById("music");
+function toggleMusic(){
+  if(music.paused) music.play();
+  else music.pause();
+}
+</script>
+
+</body>
+</html>
+
+
+
+
+			
+
+</body>
+</html>
